@@ -9,11 +9,12 @@
 
 body {
   width: 100%;
-  background-image: url('../assets/background1.jpg');
+  background-image: url('../assets/4mnfrosty.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
   background-color: black;
+  background-position: center center;
   text-align: center;
 }
 
@@ -46,9 +47,10 @@ h1 {
 }
 
 section {
-
-  width: 325px;
+  width: 50%;
+  min-width: 325px;
   height: 400px;
+  max-width: 550px;
   background-color: #b9a6f7;
   opacity: .9;
   margin: 0% 5%;

@@ -5,8 +5,7 @@ console.log('connected');
 */
 
 /* TODO
-	pull relevant elements from document
-		- where data will be added
+	change background based on time of day
 
 	populate document with data
 		- API call (GET)
@@ -16,20 +15,18 @@ console.log('connected');
 				%chance of precipitation
 				hourly temp
 				hourly precipitation(?)
-				humidity (hourly?)
-				wind speed (hourly?)
+				humidity
+				wind speed
 			- create plots based on data (using d3.js)
 			- update document with data/plots
 			- suggest outfit based on weather report
 */
 
-const currentTempElement = document.getElementById('currenttemp');
-const minTempElement = document.getElementById('mintemp');
-const maxTempElement = document.getElementById('maxtemp');
-const humidityElement = document.getElementById('humidity');
-const precipitationElement = document.getElementById('precipitation');
-const windSpeedElement = document.getElementById('windspeed');
+let currentTime = new Date();
+let hours = currentTime.getHours();
+let mins = currentTime.getMinutes();
 
+document.getElementById('time').innerText = `${hours}:${mins}`;
 
 var getCurrentPosition = function () {
     if (navigator.geolocation) {
@@ -65,12 +62,28 @@ function callDarkSky(position) {
 	})
 	.then((res) => {
 		console.log(res);
+		updateDom(res);
 	})
 	.catch((err) => {
 		console.log(err)
 	})
 }
 
+const currentTempElement = document.getElementById('currenttemp');
+const minTempElement = document.getElementById('mintemp');
+const maxTempElement = document.getElementById('maxtemp');
+const humidityElement = document.getElementById('humidity');
+const precipitationElement = document.getElementById('precipitation');
+const windSpeedElement = document.getElementById('windspeed');
+
+function updateDom(response) {
+	currentTempElement.innerText = `It is currently ${response.currently.temperature}`;
+	minTempElement.innerText = `The low today is ${response.daily.data[0].temperatureLow}`;
+	maxTempElement.innerText = `The high today is ${response.daily.data[0].temperatureHigh}`;
+	humidityElement.innerText = `The humidity right now is ${response.currently.humidity}`;
+	precipitationElement.innerText = `The chance of rain today is ${response.daily.data[0].precipProbability}`;
+	windSpeedElement.innerText = `The wind speed is ${response.currently.windSpeed}`;
+}
 
 
 
